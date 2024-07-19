@@ -1,0 +1,3 @@
+/home/jeffery/CS205/lab/lab5/ex3/CMakeFiles/StuScore.dir
+/home/jeffery/CS205/lab/lab5/ex3/CMakeFiles/edit_cache.dir
+/home/jeffery/CS205/lab/lab5/ex3/CMakeFiles/rebuild_cache.dir

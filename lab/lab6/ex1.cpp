@@ -1,0 +1,17 @@
+#include <iostream>
+using namespace std;
+int * create_array(int size){
+    int *arr = new int[size];
+    for(int i = 0; i < size; i++)
+    arr[i] = i * 10;
+    return arr;//7:12: warning: address of local variable ‘arr’ returned [-Wreturn-local-addr]
+}
+int main(){
+    int len = 16;
+    int *ptr = create_array(len);
+    for(int i = 0; i < len; i++){
+        cout << ptr[i] << " ";
+    }
+    delete[] ptr;
+    return 0;
+}

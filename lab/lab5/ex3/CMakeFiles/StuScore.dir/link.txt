@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/StuScore.dir/main.cpp.o CMakeFiles/StuScore.dir/stufun.cpp.o -o StuScore 

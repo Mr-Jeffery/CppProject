@@ -1,0 +1,95 @@
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+template <class Key, class Value>
+class Dictionary {
+Key* keys;
+Value* values;
+int size;
+int max_size;
+public:
+    Dictionary(int initial_size) : size(0) {
+        max_size = 1;
+        while (initial_size >= max_size){
+            max_size *= 2;
+        }
+        keys = new Key[max_size];
+        values = new Value[max_size];
+    }
+
+    void add(Key key, Value value) {
+        Key* tmpKey;
+        Value* tmpVal;
+        if (size + 1 >= max_size) {
+            max_size *= 2;
+            tmpKey = new Key [max_size];
+            tmpVal = new Value [max_size];
+            for (int i = 0; i < size; i++) {
+                tmpKey[i] = keys[i];
+                tmpVal[i] = values[i];
+            }
+            tmpKey[size] = key;
+            tmpVal[size] = value;
+            delete[] keys;
+            delete[] values;
+            keys = tmpKey;
+            values = tmpVal;
+        }
+        else {
+            keys[size] = key;
+            values[size] = value;
+        }
+        size++;
+    }
+
+    void print() {
+        for (int i = 0; i < size; i++){
+            cout << "{" << keys[i] << ", " << values[i] << "}" << endl;
+        }
+    }
+
+    template <typename T = Key>
+    typename std::enable_if<std::is_same<T, int>::value, void>::type sort() {
+        for (int i = 0; i < size; i++) {
+            for (int j = i + 1; j < size; j++) {
+                if (keys[i] > keys[j]) {
+                    swap(keys[i], keys[j]);
+                    swap(values[i], values[j]);
+                }
+            }
+        }
+    }
+
+    // template <typename T = Key>
+    // typename std::enable_if<!std::is_same<T, int>::value, void>::type sort() = delete;
+
+    ~Dictionary(){
+        delete[] keys;
+        delete[] values;
+    }
+};
+
+
+int main()
+{
+    Dictionary<const char*, const char*> dict(10);
+    dict.print();
+    dict.add("apple", "fruit");
+    dict.add("banana", "fruit");
+    dict.add("dog", "animal");
+    dict.print();
+    // dict.sort();
+    cout << endl;
+    Dictionary<int, const char*> dict_specialized(10);
+    dict_specialized.print();
+    dict_specialized.add(100, "apple");
+    dict_specialized.add(101, "banana");
+    dict_specialized.add(103, "dog");
+    dict_specialized.add(89, "cat");
+    dict_specialized.print();
+    dict_specialized.sort();
+    cout << endl << "Sorted list:" << endl;
+    dict_specialized.print();
+    return 0;
+}
